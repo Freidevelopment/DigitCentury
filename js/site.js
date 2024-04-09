@@ -5,7 +5,7 @@ function displayMessage() {
     let message = inputBox.value;
 
     Swal.fire({
-        title: "App Name",
+        title: "DigitCentury",
         text: message,
         icon: "success",
         backdrop: false
