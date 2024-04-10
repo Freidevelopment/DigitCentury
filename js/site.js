@@ -20,7 +20,7 @@ function getValues() {
             text: 'Please enter valid numbers for DigitCentury to use',
             backdrop: false
         });
-    } else if (startNumber > endNumber || startNumber < 0 || endNumber > 100) {
+    } else if ((startNumber > endNumber) || (startNumber < 0) || (endNumber > 100)) {
         // display and error message
         Swal.fire({
             icon: 'error',
@@ -32,6 +32,7 @@ function getValues() {
         let generatedNumbers = generateValues(startNumber, endNumber);
         displayValues(generatedNumbers);
     }
+
 
 }
 
