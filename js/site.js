@@ -11,16 +11,35 @@ function getValues() {
     startNumber = Number(startNumber);
     endNumber = Number(endNumber);
 
-    let generatedNumbers = generateValues(startNumber, endNumber);
+    // validate our inputs
+    if (isNaN(startNumber) || isNaN(endNumber)) {
+        // display and error message
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Please enter valid numbers for DigitCentury to use',
+            backdrop: false
+        });
+    } else if (startNumber > endNumber || startNumber < 0 || endNumber > 100) {
+        // display and error message
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Please enter valid starting and ending numbers for DigitCentury to use',
+            backdrop: false
+        });   
+    } else {
+        let generatedNumbers = generateValues(startNumber, endNumber);
+        displayValues(generatedNumbers);
+    }
 
-    displayValues(generatedNumbers);
 }
 
 // generate a list of numbers between those two values
 function generateValues(start, end) {
     let numbers = [];
 
-    for (let i = start; i <= end; i = i + 1) {
+    for (let i = start; i <= end; i++) {
         numbers.push(i);
     }
 
@@ -32,12 +51,24 @@ function generateValues(start, end) {
 function displayValues(numberArray) {  
 
     let tableHtml = '';
+    
 
-    for (let index = 0; index < numberArray.length; index = index + 1) {
+    for (let index = 0; index < numberArray.length; index = index += 1) {
 
         let number = numberArray[index];
 
-        tableHtml = tableHtml + '<tr><td>' + number + '</td></tr>';
+        let className = '';
+
+    if (number % 2 == 0) {
+        // use the class 'even' in the html
+        className = 'even';
+
+    } else {
+        // use the class 'odd' in the html
+        className = 'odd';
+    }
+
+        tableHtml += `<tr><td class="${className}">${number}</td></tr>`;
 
     }
 
@@ -45,3 +76,12 @@ function displayValues(numberArray) {
     tbody.innerHTML = tableHtml;
 
 }
+
+  
+/* 
+        <tr><td class="odd">1</td></tr>
+        <tr><td class="even">2</td></tr>
+        <tr><td class="odd">3</td></tr>
+        <tr><td class="even">4</td></tr>
+        <tr><td class="odd">5</td></tr> 
+*/

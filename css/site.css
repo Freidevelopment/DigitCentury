@@ -106,3 +106,11 @@ footer .bi:hover {
     font-size: 3.5rem;
 }
 
+.odd {
+    color: var(--njf-theme-400) !important;
+}
+
+.even {
+    font-weight: bolder;
+}
+
