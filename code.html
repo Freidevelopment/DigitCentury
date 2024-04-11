@@ -73,29 +73,125 @@
             <div class="col-12 col-lg-8">
                 <pre class="line-numbers">
                 <code class="language-js">
-                    function displayMessage() {
-                        let inputBox = document.getElementById('message');
-                        let message = inputBox.value;
-                    
-                        Swal.fire(
-                            {
-                                title: "DigitCentury",
-                                text: message,
-                                icon: "success",
+                    // collect the user inputs
+                    // AKA the Entry Point
+                    function getValues() {
+                        // get the <input /> element for the startNumber and grab its value
+                        let startInputElement = document.getElementById('startNumber');
+                        let startNumber = startInputElement.value;
+
+                        // do the same thing for the endNumber
+                        let endNumber = document.getElementById('endNumber').value;
+
+                        startNumber = Number(startNumber);
+                        endNumber = Number(endNumber);
+
+                        // validate our inputs
+                        if (isNaN(startNumber) || isNaN(endNumber)) {
+                            // display and error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops!',
+                                text: 'Please enter valid numbers for DigitCentury to use',
                                 backdrop: false
-                            });                    
+                            });
+                        } else if ((startNumber > endNumber) || (startNumber < 0) 
+                        || (endNumber > 100)) {
+                            // display and error message
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops!',
+                                text: 'Please enter valid starting and ending numbers for DigitCentury to use',
+                                backdrop: false
+                            });   
+                        } else {
+                            let generatedNumbers = generateValues(startNumber, endNumber);
+                            displayValues(generatedNumbers);
+                        }
+
+
                     }
+
+                    // generate a list of numbers between those two values
+                    function generateValues(start, end) {
+                        let numbers = [];
+
+                        for (let i = start; i <= end; i++) {
+                            numbers.push(i);
+                        }
+
+                        return numbers;
+
+                    }
+
+                    // display those numbers in my results table 
+                    function displayValues(numberArray) {  
+
+                        let tableHtml = '';
+                        
+
+                        for (let index = 0; index < numberArray.length; index = index += 1) {
+
+                            let number = numberArray[index];
+
+                            let className = '';
+
+                        if (number % 2 == 0) {
+                            // use the class 'even' in the html
+                            className = 'even';
+
+                        } else {
+                            // use the class 'odd' in the html
+                            className = 'odd';
+                        }
+
+                            tableHtml += `<tr><td class="${className}">${number}</td></tr>`;
+
+                        }
+
+                        let tbody = document.getElementById('results');
+                        tbody.innerHTML = tableHtml;
+
+                    }
+
                 </code>
             </pre>
             </div>
             <!-- The code's explanation -->
             <div class="col-12 col-lg-4">
-                <p>The code is structured in one function.</p>
-                <h5><code>displayMessage()</code></h5>
+                <p>The code is structured in three functions.</p>
+                <h5><code>getValues()</code></h5>
                 <p>
-                    The <code>displayMessage</code> function gets the
-                    text from the input element and displays it in
-                    a Sweet Alert popup.
+                    The <code>getValues</code> function gets the
+                    numbers from the input elements for the start 
+                    number and the end number. It than checks the 
+                    inputs to make sure that they are what the code is looking for.
+                    If either of the inputs are incorrect the 
+                    user is sent an error message and needs to 
+                    put in the correct inputs. When the inputs 
+                    are correct the numbers are sent to 
+                    the function <code>generateValues</code>. 
+                    When it comes back from the function, those 
+                    numbers are sent to the function <code>displayValues</code>.
+                </p>
+                <h5><code>generateValues()</code></h5>
+                <p>
+                    The <code>generateValues</code> function makes 
+                    the numbers between the start number and the end
+                    number. This will than build those numbers into 
+                    an array which is sent back to <code>getValues</code>.
+                </p>
+                <h5><code>displayValues()</code></h5>
+                <p>
+                    The <code>displayValues</code> function gets the
+                    number array from <code>getValues</code>. This 
+                    than looks through each of the values and places
+                    them into a table. It will also check both 
+                    the odd numbers and the even numbers and 
+                    properly name them so that they can be 
+                    changed by the site.css classes I gave them.
+                    The table is than placed into the html file
+                    and displayed into its designated area.
                 </p>
             </div>
         </div>
